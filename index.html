@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina de IAs | Transforme Suas Ideias em Lucro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS Reset & Variáveis --- */
+        :root {
+            --bg-dark: #0F172A; /* Slate 900 */
+            --bg-light: #1E293B; /* Slate 800 */
+            --primary: #22D3EE;  /* Cyan 400 */
+            --primary-light: #67E8F9; /* Cyan 300 */
+            --text-light: #F1F5F9;  /* Slate 100 */
+            --text-medium: #94A3B8; /* Slate 400 */
+            --text-dark: #0F172A;
+            --border-color: #334155; /* Slate 700 */
+
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        #meteors-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .meteor {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(34, 211, 238, 0.8), transparent);
+            width: 2px;
+            height: 150px;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: meteor-fall 15s linear infinite;
+            transform: rotate(-45deg);
+        }
+        .meteor:nth-child(1) { top: -100px; left: 10%; animation-delay: 0s; animation-duration: 12s; }
+        .meteor:nth-child(2) { top: -150px; left: 40%; animation-delay: 2s; animation-duration: 10s; }
+        .meteor:nth-child(3) { top: -50px; left: 80%; animation-delay: 5s; animation-duration: 15s; }
+        .meteor:nth-child(4) { top: -200px; left: 95%; animation-delay: 7s; animation-duration: 8s; }
+        .meteor:nth-child(5) { top: -100px; left: 60%; animation-delay: 10s; animation-duration: 14s; }
+
+        @keyframes meteor-fall {
+            from { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+            to { transform: translate(-100vw, 100vh) rotate(-45deg); opacity: 0; }
+        }
+
+        /* --- Tipografia e Estilos Gerais --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        h1 { font-size: clamp(2.5rem, 6vw, 3rem); font-weight: 800; }
+        h2 { font-size: clamp(2rem, 5vw, 2.5rem); }
+        h3 { font-size: 1.5rem; }
+        p { color: var(--text-medium); margin-bottom: 1rem; }
+        a { color: var(--primary); text-decoration: none; }
+        img { max-width: 100%; height: auto; display: block; }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section { padding: 80px 0; }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--primary); border-radius: 2px;
+        }
+        .section-title p { max-width: 600px; margin: 15px auto 0; font-size: 1.1rem; }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: var(--text-dark);
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .cta-button:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(34, 211, 238, 0.2); }
+
+        /* --- Estilos das Seções --- */
+        .hero { text-align: center; padding: 100px 0 60px 0; }
+        .hero h1 span { color: var(--primary); }
+        .hero .subtitle { font-size: 1.25rem; max-width: 750px; margin: 20px auto 30px; color: var(--text-medium); line-height: 1.7; }
+        .hero .micro-copy { font-size: 0.9rem; color: var(--text-medium); margin-top: 15px; }
+        .hero-image-mockup { margin-top: 50px; background: linear-gradient(145deg, #1e293b, #151d31); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+        .hero-image-mockup img { border-radius: 8px; }
+
+        .pain-points-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .pain-point-card { background-color: var(--bg-light); padding: 25px; border-radius: 12px; border-left: 5px solid var(--primary); transition: transform 0.3s ease; }
+        .pain-point-card:hover { transform: translateY(-5px); }
+        .pain-point-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+
+        #solution { background-color: var(--bg-light); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .feature-card { background-color: var(--bg-dark); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); border-color: var(--primary); }
+        .feature-card .icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--primary); }
+        .feature-card h3 { margin-bottom: 10px; }
+
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testimonial-card { background-color: var(--bg-light); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .testimonial-card .quote { font-style: italic; flex-grow: 1; margin-bottom: 20px; }
+        .testimonial-card .author { display: flex; align-items: center; gap: 15px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        .author img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); }
+        .author-info strong { display: block; color: var(--text-light); }
+
+        #pricing { background-color: var(--bg-dark); }
+        .pricing-box { background: var(--bg-light); border-radius: 20px; padding: 50px; max-width: 800px; margin: 0 auto; border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .value-stack { text-align: left; margin-bottom: 30px; }
+        .value-stack h3 { text-align: center; margin-bottom: 20px; }
+        .value-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap; gap: 10px;}
+        .value-item:last-child { border: none; }
+        .value-item .value { color: var(--text-medium); text-decoration: line-through; }
+        .price-reveal { text-align: center; }
+        .price-reveal p { font-size: 1.1rem; }
+        .price-reveal .price { font-size: clamp(3.5rem, 12vw, 4.5rem); font-weight: 800; color: var(--primary); margin: 10px 0; }
+        .price-reveal .payment-info { font-size: 1.2rem; font-weight: 700; }
+        .pricing-box .cta-button { margin-top: 30px; }
+        .urgency-note { margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--primary-light); }
+        
+        #final-cta { background: linear-gradient(180deg, var(--bg-dark) 0%, #0c1221 100%); text-align: center; }
+        #final-cta h2 { font-size: clamp(2.2rem, 6vw, 2.8rem); }
+        #final-cta p { max-width: 700px; margin: 20px auto 30px; font-size: 1.1rem; }
+
+        .faq-accordion { max-width: 800px; margin: 0 auto; }
+        .faq-item { background-color: var(--bg-light); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color); }
+        .faq-item summary { padding: 20px; font-weight: 600; font-size: 1.1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: '+'; font-size: 1.5rem; transition: transform 0.2s ease-in-out; }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-item .faq-content { padding: 0 20px 20px; border-top: 1px solid var(--border-color); }
+
+        footer { background-color: #000; text-align: center; padding: 30px 20px; color: var(--text-medium); font-size: 0.9rem; }
+        footer .container { position: relative; z-index: 1; }
+        
+
+        /* --- Mobile-First Adjustments & Responsiveness --- */
+        @media (max-width: 768px) {
+            body { line-height: 1.7; }
+            section { padding: 60px 0; }
+            
+            .cta-button {
+                padding: 16px 30px;
+                font-size: 1rem;
+                width: 100%; /* Botões ocupam largura total para facilitar o clique */
+            }
+            .hero .cta-button { width: auto; } /* Exceto o do Hero */
+
+            .pricing-box { padding: 30px 25px; }
+            
+            #final-cta .cta-button { max-width: 400px; margin: 0 auto; }
+            
+            .hero { padding-top: 80px; }
+        }
+
+        /* --- Fine-tuning for smaller mobile screens --- */
+        @media (max-width: 480px) {
+            section { padding: 50px 0; }
+            .section-title p { font-size: 1rem; }
+
+            .pain-point-card, .feature-card, .testimonial-card {
+                padding: 25px;
+            }
+            
+            .pricing-box { padding: 25px 20px; }
+            .value-item { font-size: 0.9rem; }
+            .price-reveal p { font-size: 1rem; }
+            .price-reveal .payment-info { font-size: 1.1rem; }
+
+            .hero .subtitle { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="meteors-container">
+        <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+    </div>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Sua Oficina Completa de <span>Inteligência Artificial</span></h1>
+            <p class="subtitle">Acesse o arsenal de ferramentas que os profissionais usam para criar conteúdo, automatizar tarefas e multiplicar resultados. Transforme suas ideias em lucro, hoje.</p>
+            <a href="#pricing" class="cta-button">QUERO ACESSO IMEDIATO</a>
+            <p class="micro-copy">Acesso vitalício. Risco Zero. Resultados Imediatos.</p>
+            <div class="hero-image-mockup">
+                 <img src="https://marketingtododia.com.br/wp-content/uploads/2025/07/image_1751421409147-C4hRrFXM.jpg" alt="Dashboard da Oficina de IA's">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="problem">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Você se Sente Deixado Para Trás?</h2>
+                    <p>O mundo digital acelera a cada dia. Tentar acompanhá-lo sem as ferramentas certas é como correr uma maratona de pés descalços.</p>
+                </div>
+                <div class="pain-points-grid">
+                    <div class="pain-point-card">
+                        <h3>💸 Gastos Exorbitantes</h3>
+                        <p>Assinaturas de ferramentas de IA, design e vídeo podem custar milhares de reais por ano, minando seu lucro.</p>
+                    </div>
+                    <div class="pain-point-card">
+                        <h3>⏳ Horas Desperdiçadas</h3>
+                        <p>Tarefas que poderiam levar minutos com IA, tomam horas do seu dia, atrasando projetos e limitando seu crescimento.</p>
+                    </div>
+                    <div class="pain-point-card">
+                        <h3>📉 Conteúdo que não Converte</h3>
+                        <p>Criar designs, vídeos e textos de alta qualidade é um desafio constante, resultando em um trabalho que não gera impacto nem vendas.</p>
+                    </div>
+                    <div class="pain-point-card">
+                        <h3>🤯 Sobrecarga de Informação</h3>
+                        <p>Com tantas ferramentas surgindo, é impossível saber quais realmente funcionam e valem a pena, gerando paralisia e confusão.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution">
+            <div class="container">
+                <div class="section-title">
+                    <h2>A Revolução do Seu Fluxo de Trabalho</h2>
+                    <p>Substitua o caos por um arsenal completo. A Oficina de IA é o seu atalho para a produtividade e criatividade ilimitadas.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">🤖</div>
+                        <h3>Crie Conteúdo 10x Rápido</h3>
+                        <p>Use o poder do ChatGPT-4, Midjourney e Sora para gerar textos, imagens e vídeos que levariam semanas para serem feitos.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🎨</div>
+                        <h3>Designs de Nível Profissional</h3>
+                        <p>Com CapCut PRO, Canva PRO e Envato Elements, seus criativos nunca mais parecerão amadores. Impressione e converta.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🚀</div>
+                        <h3>Automatize o Repetitivo</h3>
+                        <p>Liberte seu tempo com ferramentas de automação e foque no que realmente importa: a estratégia do seu negócio.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📚</div>
+                        <h3>Aprenda e Lucre</h3>
+                        <p>Acesse milhares de cursos e PLRs para se capacitar ou para criar uma nova fonte de renda revendendo produtos digitais.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Milhares de Criadores Já Estão na Frente</h2>
+                    <p>Veja o que nossos membros dizem sobre a Oficina de IA.</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="quote">"Isso aqui não é um produto, é um divisor de águas. O valor que eu pagaria em UMA só ferramenta pagou meu acesso a TUDO. Meu investimento se pagou em 2 dias."</p>
+                        <div class="author">
+                            <img src="https://placehold.co/100x100/F1F5F9/0F172A?text=JP" alt="Foto de João Paulo">
+                            <div class="author-info">
+                                <strong>João Paulo S.</strong>
+                                <span>Gestor de Tráfego</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Eu estava sobrecarregada, tentando fazer tudo sozinha. A Oficina de IA me deu as ferramentas e a confiança pra escalar meu negócio de social media. Indispensável!"</p>
+                        <div class="author">
+                            <img src="https://placehold.co/100x100/F1F5F9/0F172A?text=M" alt="Foto de Mariana C.">
+                            <div class="author-info">
+                                <strong>Mariana Costa</strong>
+                                <span>Social Media</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="testimonial-card">
+                        <p class="quote">"O acesso ao Envato e Freepik por si só já vale o preço. A quantidade de material para meus projetos é simplesmente absurda. Recomendo de olhos fechados."</p>
+                        <div class="author">
+                            <img src="https://placehold.co/100x100/F1F5F9/0F172A?text=L" alt="Foto de Lucas F.">
+                            <div class="author-info">
+                                <strong>Lucas Ferraz</strong>
+                                <span>Designer Gráfico</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="container">
+                <div class="pricing-box">
+                    <div class="section-title">
+                        <h2>Sua Decisão Mais Inteligente do Ano</h2>
+                    </div>
+
+                    <div class="value-stack">
+                        <h3>Veja o que você leva HOJE:</h3>
+                        <div class="value-item"><span>✅ Acesso a +100 Ferramentas</span><span class="value">R$ 23.850,00</span></div>
+                        <div class="value-item"><span>✅ ChatGPT-4.5, Midjourney, Sora</span><span class="value">R$ 450/mês</span></div>
+                        <div class="value-item"><span>✅ Envato Elements & Freepik PRO</span><span class="value">R$ 280/mês</span></div>
+                        <div class="value-item"><span>✅ Canva PRO & CapCut PRO</span><span class="value">R$ 85/mês</span></div>
+                        <div class="value-item"><span>✅ +5.000 Cursos e +3.000 PLRs</span><span class="value">Incalculável</span></div>
+                        <div class="value-item"><span>✅ Suporte VIP e Grupo de Networking</span><span class="value">Incalculável</span></div>
+                    </div>
+
+                    <div class="price-reveal">
+                        <p>Você não vai pagar R$23.850, nem R$1.000.</p>
+                        <p>Seu acesso VITALÍCIO a tudo isso por um pagamento único de:</p>
+                        <div class="price">R$ 19,90</div>
+                        <div class="payment-info">Sem mensalidades. Sem pegadinhas.</div>
+                        <a href="https://pay.cakto.com.br/3c5gvod_479005" class="cta-button">QUERO GARANTIR MEU ACESSO COM DESCONTO!</a>
+                        <p class="urgency-note">⚠️ <strong>Atenção:</strong> Esta oferta é por tempo limitado. O valor pode subir a qualquer momento sem aviso prévio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="final-cta">
+            <div class="container">
+                <h2>Você Chegou Até Aqui por um Motivo.</h2>
+                <p>Você leu, se identificou com os problemas e vislumbrou a solução. Você sabe que esta é a oportunidade de economizar, acelerar e finalmente sair na frente. A escolha inteligente já foi feita. Agora, falta apenas o último passo para tornar tudo isso realidade.</p>
+                <a href="#pricing" class="cta-button">É HORA DE CONCLUIR MEU ACESSO</a>
+            </div>
+        </section>
+
+        <section id="faq">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Ainda Tem Dúvidas?</h2>
+                </div>
+                <div class="faq-accordion">
+                    <details class="faq-item">
+                        <summary>É confiável?</summary>
+                        <div class="faq-content">
+                            <p>Sim! Já são mais de 8 mil clientes ativos e satisfeitos. Além disso, oferecemos 7 dias de garantia incondicional para você testar sem risco algum.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Por que tão barato?</summary>
+                        <div class="faq-content">
+                            <p>Nosso modelo é baseado em assinaturas compartilhadas em grande escala. Compramos planos empresariais e dividimos os custos entre milhares de usuários. Assim, todos conseguem usar pagando apenas uma fração do preço, mantendo a estabilidade e a qualidade.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Como recebo meu acesso?</summary>
+                        <div class="faq-content">
+                            <p>O acesso é imediato! Assim que seu pagamento for confirmado, você receberá um e-mail com todas as instruções, login e senha para acessar nossa área de membros exclusiva.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Oficina de IA's. Todos os direitos reservados.</p>
+            <p>Este site não é afiliado ao Facebook ou a qualquer entidade do Facebook. Depois que você sair do Facebook, a responsabilidade não é deles e sim do nosso site.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
